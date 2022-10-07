@@ -7,3 +7,4 @@ Essential components to kick start ktor server side development. Below are the c
 1. OAuth - JWT
 2. Role based authentication
 3. API docs - In-progress
+4. Add API retry

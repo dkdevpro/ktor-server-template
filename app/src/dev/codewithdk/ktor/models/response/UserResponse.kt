@@ -2,9 +2,7 @@ package dev.codewithdk.ktor.models.response
 
 import dev.codewithdk.ktor.data.model.User
 
-/**
- * Created by DK on 16/11/20.
- */
+
 data class UserResponse(
     override val status: State,
     override val message: String,

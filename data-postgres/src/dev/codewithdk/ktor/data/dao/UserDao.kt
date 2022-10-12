@@ -10,9 +10,7 @@ import org.jetbrains.exposed.sql.update
 import java.util.*
 import javax.inject.Inject
 
-/**
- * Created by DK on 16/11/20.
- */
+
 class UserDao @Inject constructor() {
 
     fun addUser(

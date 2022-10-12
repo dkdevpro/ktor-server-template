@@ -1,8 +1,6 @@
 package dev.codewithdk.ktor.models.response
 
-/**
- * Created by DK on 16/11/20.
- */
+
 data class AuthResponse(
     override val status: State,
     override val message: String,

@@ -2,9 +2,7 @@ package dev.codewithdk.ktor.data.model
 
 import dev.codewithdk.ktor.data.entity.UserEntity
 
-/**
- * Created by DK on 16/11/20.
- */
+
 data class User(
     val userId: String,
     val emailId: String,

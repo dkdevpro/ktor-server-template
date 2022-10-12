@@ -5,9 +5,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-/**
- * Created by DK on 16/11/20.
- */
+
 fun initDatabase(
     host: String,
     port: String,

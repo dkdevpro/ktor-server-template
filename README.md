@@ -14,3 +14,5 @@ Essential components to kick start ktor server side development. Below are the c
    4. MySQL support - In-progress
    5. Dynamo DB support -  In-progress
    6. Redis support - In-progress
+
+5. SwaggerUI for API docs in KtorV2.2.0

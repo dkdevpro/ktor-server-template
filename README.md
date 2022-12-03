@@ -1,4 +1,4 @@
-# ktor-server-minimalist
+# ktor-server-boilerplate
 <p>
 <img src="https://img.shields.io/badge/STATUS-IN%20DEVELOPMENT-brightgreen" alt=""/>
 </p>

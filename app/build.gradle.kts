@@ -33,7 +33,7 @@ dependencies {
 
 
     // Data module
-    implementation(project(":data-postgres"))
+    implementation(project(":database-postgres"))
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")

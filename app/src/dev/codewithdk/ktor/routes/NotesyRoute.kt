@@ -7,15 +7,12 @@ import dev.codewithdk.ktor.exception.FailureMessages
 import dev.codewithdk.ktor.exception.UnauthorizedActivityException
 import dev.codewithdk.ktor.models.request.ChangPasswordRequest
 import dev.codewithdk.ktor.models.request.CreatePasswordRequest
-import dev.codewithdk.ktor.models.request.UserLogout
 import dev.codewithdk.ktor.models.response.generateHttpResponse
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.sessions.*
-import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

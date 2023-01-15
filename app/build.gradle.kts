@@ -3,18 +3,19 @@ val ktor_version: String by project
 val coroutines_version: String by project
 val kotlin_version: String by project
 val kotlin_serialization: String by project
+val swagger_codegen_version: String by project
 
 plugins {
     application
     kotlin("jvm")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.4.32"
+    kotlin("plugin.serialization").version("1.8.0")
 }
 
 group = "dev.codewithdk.ktor"
 version = "0.0.1-SNAPSHOT"
 
 application {
-    mainClass.set("dev.codewithdk.ktor.server.minimalist.ApplicationKt")
+    mainClass.set("dev.codewithdk.ktor.ApplicationKt")
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
@@ -72,4 +73,9 @@ dependencies {
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    // Swagger documentation
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
+    implementation("io.swagger.codegen.v3:swagger-codegen-generators:$swagger_codegen_version")
+    implementation("io.ktor:ktor-server-openapi:$ktor_version")
 }

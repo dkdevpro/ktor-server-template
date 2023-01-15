@@ -1,0 +1,56 @@
+openapi: "3.0.3"
+info:
+  title: "Notesy API"
+  description: "A Notesy JSON API that allows you to view and add notes"
+  version: "1.0.0"
+servers:
+  - url: "http://0.0.0.0:8080"
+paths:
+  /notesy/create:
+    post:
+      description: "Creates a new note with text, image, audio and video"
+      requestBody:
+        description: "A JSON object containing notes information"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Notesy"
+      responses:
+        "200":
+          description: "Created"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Notes created correctly"
+  /notesy/{id}:
+    get:
+      description: "Returns a note by its ID"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Notesy"
+components:
+  schemas:
+    Notesy:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int32"
+        title:
+          type: "string"
+        description:
+          type: "string"

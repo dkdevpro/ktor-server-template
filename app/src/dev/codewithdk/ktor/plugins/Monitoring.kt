@@ -19,6 +19,4 @@ fun Application.configureMonitoring() {
             callId.isNotEmpty()
         }
     }
-    
-
 }

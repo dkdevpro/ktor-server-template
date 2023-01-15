@@ -10,7 +10,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 
-fun Application.configStatusPages(){
+fun Application.configStatusPages() {
     install(StatusPages) {
         exception<BadRequestException> { call, cause ->
             call.respond(HttpStatusCode.BadRequest, getResponse(State.FAILED, cause.message ?: "Bad request"))
@@ -40,6 +40,7 @@ fun Application.configStatusPages(){
         }
     }
 }
+
 fun getResponse(state: State, message: String): Response {
     return object : Response {
         override var status: State = state

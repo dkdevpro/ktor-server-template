@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 
-open class KtorMinimalistJWT private constructor(secret: String) {
+open class KtorBoilerplateJWT private constructor(secret: String) {
     private val algorithm = Algorithm.HMAC256(secret)
 
     val verifier: JWTVerifier = JWT
@@ -17,36 +17,36 @@ open class KtorMinimalistJWT private constructor(secret: String) {
      * Generates JWT token from [userId].
      */
 
-    fun logout(userId: String, userType : String): String = JWT
+    fun logout(userId: String, userType: String): String = JWT
         .create()
         .withIssuer(ISSUER)
         .withAudience(AUDIENCE)
         .withClaim(ClAIM, userId)
-        .withClaim(ClAIM_USERTYPE,userType )
+        .withClaim(ClAIM_USERTYPE, userType)
         .sign(algorithm)
 
 
-    fun sign(userId: String, userType : String): String = JWT
+    fun sign(userId: String, userType: String): String = JWT
         .create()
         .withIssuer(ISSUER)
         .withAudience(AUDIENCE)
         .withClaim(ClAIM, userId)
-        .withClaim(ClAIM_USERTYPE,userType )
+        .withClaim(ClAIM_USERTYPE, userType)
         .sign(algorithm)
 
     companion object {
-        lateinit var instance: KtorMinimalistJWT
+        lateinit var instance: KtorBoilerplateJWT
             private set
 
         fun initialize(secret: String) {
             synchronized(this) {
                 if (!this::instance.isInitialized) {
-                    instance = KtorMinimalistJWT(secret)
+                    instance = KtorBoilerplateJWT(secret)
                 }
             }
         }
 
-        private const val ISSUER = "Ktor-Minimalist-JWT-Issuer"
+        private const val ISSUER = "Ktor-Boilerplate-JWT-Issuer"
         private const val AUDIENCE = "http://localhost.com"
         const val ClAIM = "user_id"
         const val ClAIM_USERTYPE = "user_type"

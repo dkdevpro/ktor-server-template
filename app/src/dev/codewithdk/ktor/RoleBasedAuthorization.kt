@@ -17,11 +17,9 @@ class RoleBasedAuthorization(config: Configuration) {
 
     class Configuration {
         internal var _getRoles: (Principal) -> Set<Role> = { emptySet() }
-
         fun getRoles(gr: (Principal) -> Set<Role>) {
             _getRoles = gr
         }
-
     }
 
     fun interceptPipeline(
@@ -29,10 +27,10 @@ class RoleBasedAuthorization(config: Configuration) {
         all: Set<Role>? = null,
         none: Set<Role>? = null
     ) {
-        pipeline.insertPhaseAfter(ApplicationCallPipeline.Plugins, PipelinePhase("challenge"))
-        pipeline.insertPhaseAfter(PipelinePhase("challenge"), AuthorizationPhase)
+        //pipeline.insertPhaseAfter(ApplicationCallPipeline.Plugins, PipelinePhase("challenge"))
+        //pipeline.insertPhaseAfter(PipelinePhase("challenge"), AuthorizationPhase)
 
-        pipeline.intercept(AuthorizationPhase) {
+        pipeline.intercept(ApplicationCallPipeline.Plugins) {
             val principal =
                 call.authentication.principal<UserSession>() ?: throw AuthorizationException("Missing principal")
             val roles = getRoles(principal)
@@ -61,7 +59,6 @@ class RoleBasedAuthorization(config: Configuration) {
                     }"
                 }
             }
-
             if (denyReasons.isNotEmpty()) {
                 val message = denyReasons.joinToString(". ")
                 println("Authorization failed for ${call.request.path()}. $message")
@@ -73,34 +70,27 @@ class RoleBasedAuthorization(config: Configuration) {
 
     companion object Feature : BaseApplicationPlugin<ApplicationCallPipeline, Configuration, RoleBasedAuthorization> {
         override val key = AttributeKey<RoleBasedAuthorization>("RoleBasedAuthorization")
-
         val AuthorizationPhase = PipelinePhase("Authorization")
-
         override fun install(
             pipeline: ApplicationCallPipeline, configure: Configuration.() -> Unit
         ): RoleBasedAuthorization {
             val configuration = Configuration().apply(configure)
             return RoleBasedAuthorization(configuration)
         }
-
-
     }
 }
 
 class AuthorizedRouteSelector(private val description: String) :
     RouteSelector(RouteSelectorEvaluation.qualityConstant) {
     override fun evaluate(context: RoutingResolveContext, segmentIndex: Int) = RouteSelectorEvaluation.Constant
-
     override fun toString(): String = "(authorize ${description})"
 }
 
 fun Route.withRole(role: Role, build: Route.() -> Unit) = authorizedRoute(all = setOf(role), build = build)
-
 fun Route.withAllRoles(vararg roles: Role, build: Route.() -> Unit) =
     authorizedRoute(all = roles.toSet(), build = build)
 
 fun Route.withAnyRole(vararg roles: Role, build: Route.() -> Unit) = authorizedRoute(any = roles.toSet(), build = build)
-
 fun Route.withoutRoles(vararg roles: Role, build: Route.() -> Unit) =
     authorizedRoute(none = roles.toSet(), build = build)
 
@@ -109,7 +99,6 @@ private fun Route.authorizedRoute(
     all: Set<Role>? = null,
     none: Set<Role>? = null, build: Route.() -> Unit
 ): Route {
-
     val description = listOfNotNull(
         any?.let { "anyOf (${any.joinToString(" ")})" },
         all?.let { "allOf (${all.joinToString(" ")})" },

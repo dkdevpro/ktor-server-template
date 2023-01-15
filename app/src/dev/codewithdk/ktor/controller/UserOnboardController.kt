@@ -1,6 +1,6 @@
 package dev.codewithdk.ktor.controller
 
-import dev.codewithdk.ktor.auth.KtorMinimalistJWT
+import dev.codewithdk.ktor.auth.KtorBoilerplateJWT
 import dev.codewithdk.ktor.enum.UserType
 import dev.codewithdk.ktor.exception.BadRequestException
 import dev.codewithdk.ktor.exception.UnauthorizedActivityException
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class UserOnboardController @Inject constructor(private val userDao: UserDao) {
 
-    private val jwt = KtorMinimalistJWT.instance
+    private val jwt = KtorBoilerplateJWT.instance
 
     fun register(userOnboardRequest: UserOnboardRequest): AuthResponse {
         return try {
@@ -67,10 +67,10 @@ class UserOnboardController @Inject constructor(private val userDao: UserDao) {
         }
     }
 
-    fun logout(userId: String,userType: String): AuthResponse {
+    fun logout(userId: String, userType: String): AuthResponse {
         return try {
 
-            if (userType.isEmpty() || (userType!= UserType.CUSTOMER.type && userType!= UserType.ADMIN.type)) {
+            if (userType.isEmpty() || (userType != UserType.CUSTOMER.type && userType != UserType.ADMIN.type)) {
                 throw BadRequestException("User type invalid")
             }
 
@@ -105,13 +105,18 @@ class UserOnboardController @Inject constructor(private val userDao: UserDao) {
                 (request.currentPassword.isEmpty()) -> throw BadRequestException(
                     "current password is empty"
                 )
+
                 (request.newPassword.isEmpty()) -> throw BadRequestException("new password is empty")
             }
 
 
             val password = hash(request.currentPassword)
 
-            if (!userDao.isUserPasswordExists(userId, password) && !userDao.isUserTempPasswordExists(userId, password)) {
+            if (!userDao.isUserPasswordExists(userId, password) && !userDao.isUserTempPasswordExists(
+                    userId,
+                    password
+                )
+            ) {
                 throw BadRequestException("Password doesn't exist")
             }
 
@@ -136,7 +141,7 @@ class UserOnboardController @Inject constructor(private val userDao: UserDao) {
                 (request.password.length !in (8..50)) -> throw BadRequestException("Password should have at least 8 characters")
             }
 
-            if (!userDao.isUserExists(id,request.userType)) {
+            if (!userDao.isUserExists(id, request.userType)) {
                 throw BadRequestException("User doesn't exist")
             }
 

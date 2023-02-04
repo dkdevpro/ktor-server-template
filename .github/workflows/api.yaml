@@ -36,6 +36,8 @@ jobs:
 
       - name: Grant Permission to Execute
         run: chmod +x gradlew
+        with:
+          path: ~/.
 
       - name: 🏗 Build with Gradle 🛠️
         run: ./gradlew build --stacktrace

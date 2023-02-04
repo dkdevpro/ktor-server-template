@@ -13,11 +13,13 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.openapi.*
+import io.ktor.server.plugins.ratelimit.*
 import io.ktor.server.plugins.swagger.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.swagger.codegen.v3.generators.html.StaticHtmlCodegen
+import kotlin.time.Duration.Companion.seconds
 
 data class UserSession(val userId: String, val roles: Set<String> = emptySet()) : Principal
 data class OriginalRequestURI(val uri: String)
@@ -43,7 +45,13 @@ fun Application.module() {
     configureMonitoring()
     configureSerialization()
     configAuthentication()
-    configStatusPages()
+    configureStatusPages()
+
+    install(RateLimit){
+        global {
+            rateLimiter(limit = 10, refillPeriod = 60.seconds)
+        }
+    }
 
     install(Sessions) {
         cookie<UserSession>("ktor_session_cookie", storage = SessionStorageMemory())

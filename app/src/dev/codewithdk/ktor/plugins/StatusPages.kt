@@ -10,7 +10,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 
-fun Application.configStatusPages() {
+fun Application.configureStatusPages() {
     install(StatusPages) {
         exception<BadRequestException> { call, cause ->
             call.respond(HttpStatusCode.BadRequest, getResponse(State.FAILED, cause.message ?: "Bad request"))
@@ -37,6 +37,10 @@ fun Application.configStatusPages() {
 
         status(HttpStatusCode.Unauthorized) { call, cause ->
             call.respond(HttpStatusCode.Unauthorized)
+        }
+        status(HttpStatusCode.TooManyRequests) { call, cause ->
+            val retryAfter = call.response.headers["Retry-After"]
+            call.respondText(text = "429: Too many requests. Wait for $retryAfter seconds.", status = cause)
         }
     }
 }

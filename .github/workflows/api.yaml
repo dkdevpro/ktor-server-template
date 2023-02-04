@@ -35,6 +35,7 @@ jobs:
           key: cache-clean-wrapper-${{ runner.os }}-${{ matrix.jdk }}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       - name: Grant Permission to Execute
         run: chmod +x ./gradlew
@@ -42,6 +43,8 @@ jobs:
           path: ~/.
 
 >>>>>>> 3fbd6d4 (Fix for api yaml)
+=======
+>>>>>>> 9e0e73e (Fix for api yaml)
       - name: 🏗 Build with Gradle 🛠️
         run: ./gradlew build --stacktrace
         working-directory: app

@@ -1,12 +1,7 @@
 name: Build ktor server template
 run-name: ${{ github.actor }} is executing GitHub Actions 🚀
-on:
-  push:
-    paths:
-      - 'app/**'
-    pull_request:
-      paths:
-        - 'app/**'
+on: [push, pull_request]
+
 jobs:
   build:
     name: Build ktor server API
@@ -23,7 +18,7 @@ jobs:
       - name: Gradle cache and wrapper
         uses: actions/cache@v2
         with:
-          path: | 
+          path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
@@ -33,16 +28,5 @@ jobs:
       - name: Grant Permission to Execute
         run: chmod +x gradlew
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      - name: Grant Permission to Execute
-        run: chmod +x ./gradlew
-        with:
-          path: ~/.
-
->>>>>>> 3fbd6d4 (Fix for api yaml)
-=======
->>>>>>> 9e0e73e (Fix for api yaml)
       - name: 🏗 Build with Gradle 🛠️
         run: ./gradlew build --stacktrace

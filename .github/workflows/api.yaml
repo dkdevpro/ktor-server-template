@@ -20,19 +20,18 @@ jobs:
         with:
           java-version: 11
 
-      - name: Cache Gradle
+      - name: Gradle cache and wrapper
         uses: actions/cache@v2
         with:
-          path: ~/.gradle/caches/
+          path: | 
+            ~/.gradle/caches
+            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Cache Gradle wrapper
-        uses: actions/cache@v2
-        with:
-          path: ~/.gradle/wrapper/
-          key: cache-clean-wrapper-${{ runner.os }}-${{ matrix.jdk }}
+      - name: Grant Permission to Execute
+        run: chmod +x gradlew
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -47,4 +46,3 @@ jobs:
 >>>>>>> 9e0e73e (Fix for api yaml)
       - name: 🏗 Build with Gradle 🛠️
         run: ./gradlew build --stacktrace
-        working-directory: app

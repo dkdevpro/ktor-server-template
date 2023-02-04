@@ -1,4 +1,4 @@
-name: Build Ktor server template
+name: Build ktor server template
 run-name: ${{ github.actor }} is executing GitHub Actions 🚀
 on:
   push:
@@ -9,7 +9,7 @@ on:
         - 'app/**'
 jobs:
   build:
-    name: Build API
+    name: Build ktor server API
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +35,7 @@ jobs:
           key: cache-clean-wrapper-${{ runner.os }}-${{ matrix.jdk }}
 
       - name: Grant Permission to Execute
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
         with:
           path: ~/.
 

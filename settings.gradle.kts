@@ -1,4 +1,4 @@
-rootProject.name = "ktor-server-boilerplate"
+rootProject.name = "ktor-server-template"
 include(":database-postgres")
 include(":database-h2")
 include(":app")
